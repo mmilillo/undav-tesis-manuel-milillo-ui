@@ -1,5 +1,5 @@
 import { lusitana } from '@/app/ui/fonts';
-import { fetchLabs, fetchLabsMock, fetchRuningLabs } from '@/app/lib/data';
+import {  fetchLabsMock, fetchRuningLabs } from '@/app/lib/data';
 import Labs from '@/app/ui/labs/available-laboratories';
 import RunningLaboratories from '../ui/labs/running-laboratories';
 

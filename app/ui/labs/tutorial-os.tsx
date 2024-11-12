@@ -1,6 +1,5 @@
 import { CheckIcon, ClockIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import linuxCommands from '@/app/ui/labs/linux-commands';
 
 export default function InvoiceStatus({ containerId }: { containerId: string }) {
   return (

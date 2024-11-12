@@ -397,6 +397,58 @@ export async function fetchYamlLabByName(laboratoryName : string) {
   }
 };
 
+export async function fetchYamlFileByName(laboratoryName ?: string) : Promise<string> {
+  try {
+    const response = await fetch(`http://localhost:3001/yaml-generator/${laboratoryName}/file`, {
+      method: "GET", // Puedes usar "POST", "PUT", etc., según lo que necesites
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+
+        // Agrega cualquier otro header necesario como Authorization, etc.
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error en la solicitud");
+    }
+
+    
+    const data = await response.json();
+    console.log(data);
+    return data; // Aquí puedes retornar los datos para usarlos en tu componente
+  } catch (error) {
+    console.error("Error al llamar a la API:", error);
+    throw error; // Lanza el error para manejarlo en otro lugar si es necesario
+  }
+};
+
+export function fetchYamlFileByNameSync(laboratoryName: string | null): Promise<string> {
+  return fetch(`http://localhost:3001/yaml-generator/${laboratoryName}/file`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error en la solicitud");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error al llamar a la API:", error);
+      throw error;
+    });
+}
+
+
+
 export async function createLab(laboratoryDTO: LaboratoryDTO) {
   try {
 

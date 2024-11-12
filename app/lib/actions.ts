@@ -1,6 +1,6 @@
 'use server';
 
-import { createLab, runLabByName } from "./data";
+import { createLab, fetchYamlFileByName, runLabByName } from "./data";
 import { LaboratoryDTO, RunLabDTO } from "./definitions";
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
@@ -64,7 +64,7 @@ export async function downLab(id: string) {
    operation: 'down'
   }
  
-  const labsReales = await runLabByName(runLabDTO);
+  const labsReales = await fetchYamlFileByName(runLabDTO.laboratoryName);
  
    revalidatePath('/labs/lab?laboratory-name=' + id);
    redirect('/labs/lab?laboratory-name=' + id);
