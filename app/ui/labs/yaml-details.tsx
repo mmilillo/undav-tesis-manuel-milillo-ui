@@ -22,7 +22,7 @@ export default async function Details({
   return (
     <div className="flex w-full flex-col md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        {'Servidores asociados al laboratorio: ' + yamlProperty.laboratoryName}
+        {'Servidores asociados al YAML del laboratorio: ' + yamlProperty.laboratoryName}
       </h2>
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         {/* NOTE: Uncomment this code in Chapter 7 */}

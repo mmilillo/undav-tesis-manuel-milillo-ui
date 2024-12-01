@@ -559,6 +559,33 @@ export async function runLabByName(lab : RunLabDTO) {
   }
 };
 
+export async function downLabByName(lab : RunLabDTO) {
+  try {
+    const response = await fetch(`http://localhost:3001/command/`, {
+      method: "POST", // Puedes usar "POST", "PUT", etc., según lo que necesites
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+        // Agrega cualquier otro header necesario como Authorization, etc.
+      },
+      body: JSON.stringify(lab)
+    });
+
+    if (!response.ok) {
+      return null;
+      //throw new Error("Error en la solicitud");
+    }
+
+    
+    const data = await response.json();
+    console.log(data);
+    return data; // Aquí puedes retornar los datos para usarlos en tu componente
+  } catch (error) {
+    console.error("Error al llamar a la API:", error);
+    throw error; // Lanza el error para manejarlo en otro lugar si es necesario
+  }
+};
+
 
 
 export async function fetchOperatingSystems() {
