@@ -6,10 +6,10 @@ import TutorialOS from '@/app/ui/labs/tutorial-os';
 import TutorialYml from '@/app/ui/labs/tutorial-yml';
 import TutorialDB from '@/app/ui/labs/tutorial-db';
 import { fetchYamlFileByName, fetchYamlFileByNameSync } from '@/app/lib/data';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 // INFO PARA CONNECTARSE A UN CONTENEDOR
-export default  function Page() {
+function Content() {
 
   // client side parameters
   const searchParams = useSearchParams()
@@ -36,3 +36,12 @@ export default  function Page() {
   );
   
 }
+
+  // Página que envuelve el componente Content con Suspense
+  export default function Page() {
+    return (
+      <Suspense fallback={<p>Cargando contenido...</p>}>
+        <Content />
+      </Suspense>
+    );
+  }

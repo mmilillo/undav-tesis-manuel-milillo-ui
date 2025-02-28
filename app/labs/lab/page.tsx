@@ -1,21 +1,18 @@
 'use client'
 
-import { lusitana } from '@/app/ui/fonts';
-import { fetchLabByName, fetchYamlLabs, fetchLabsMock, fetchYamlLabByName, fetchYamlFileByName } from '@/app/lib/data';
-import Labs from '@/app/ui/labs/available-laboratories';
+import { fetchLabByName, fetchYamlLabByName, fetchYamlFileByName } from '@/app/lib/data';
 import { Card } from '@/app/ui/dashboard/cards';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { type NextRequest } from 'next/server'
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+import { useSearchParams } from 'next/navigation';
 import LabDetails from '@/app/ui/labs/lab-details';
 import YamlDetails from '@/app/ui/labs/yaml-details';
 import { YmlCard } from '@/app/ui/labs/yml-card';
+import { Suspense } from 'react';
 
 
 
 
 // INFO DE UN LABORATORIO
-export default async function Page() {
+async function Content() {
 
   // client side parameters
   const searchParams = useSearchParams()
@@ -36,7 +33,9 @@ export default async function Page() {
     return (
       <main>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          { <Card title="Status" value={lab.status} type="pending" /> }
+          { <Card title="Estado" 
+           value={lab.status === "runing" ? "En ejecución" : lab.status}
+          type="pending" /> }
           { <Card title="Servidor" value={lab.containers[0].systemName} type="invoices" /> }
           { <Card title="Base de datos" value={lab.containers[1] ? lab.containers[1].systemName : 'No disponible'} type="invoices" /> }
           { <YmlCard title="¿Como funciona?" laboratoryName={laboratoryName} type="invoices" />}
@@ -52,7 +51,7 @@ export default async function Page() {
     return (
       <main>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          { <Card title="Status" value={'detenido'} type="pending" /> }
+          { <Card title="Estado" value={'Detenido'} type="pending" /> }
           { <Card title="Servidor" value={'-'} type="invoices" /> }
           { <Card title="Base de datos" value={'-'} type="invoices" /> }
           { <YmlCard title="¿Como funciona?" laboratoryName={laboratoryName} type="invoices" />}
@@ -64,7 +63,13 @@ export default async function Page() {
       </main>
     )
   }
+}
 
-  
-  
+// Página que envuelve el componente Content con Suspense
+export default function Page() {
+  return (
+    <Suspense fallback={<p>Cargando contenido...</p>}>
+      <Content />
+    </Suspense>
+  );
 }

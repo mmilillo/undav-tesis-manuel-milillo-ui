@@ -9,6 +9,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  BeakerIcon
 } from '@heroicons/react/24/outline';
 import { LinkIcon } from '@heroicons/react/20/solid';
 
@@ -20,8 +21,9 @@ export default async function RunningLaboratories({
 }) {
   return (
     <div className="flex w-full flex-col md:col-span-4">
-      <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Recuperados con podman
+      <h2 className="flex items-center text-xl font-bold">
+        <BeakerIcon className="w-6 h-6 text-blue-500 mr-2" />
+        Explora los laboratorios disponibles para trabajar en esta sección.
       </h2>
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         {/* NOTE: Uncomment this code in Chapter 7 */}

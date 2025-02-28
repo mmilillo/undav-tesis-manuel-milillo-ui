@@ -9,6 +9,7 @@ import {
 import { DownloadLab } from './buttons';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { Suspense } from 'react';
   
   const iconMap = {
     collected: BanknotesIcon,
@@ -17,7 +18,7 @@ import clsx from 'clsx';
     invoices: InboxIcon,
   };
   
-  export default async function CardWrapper() {
+async function Content() {
     return (
       <>
         {/* NOTE: Uncomment this code in Chapter 9 */}
@@ -68,3 +69,12 @@ import clsx from 'clsx';
     );
   }
   
+
+  // Página que envuelve el componente Content con Suspense
+export default function Page() {
+  return (
+    <Suspense fallback={<p>Cargando contenido...</p>}>
+      <Content />
+    </Suspense>
+  );
+}

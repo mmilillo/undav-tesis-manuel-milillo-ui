@@ -67,7 +67,7 @@ export default async function Details({
                   </div>
                 </div>
                 <UpLab id={yamlProperty.laboratoryName} />
-                <Link
+                {/*<Link
                   key={yamlProperty.laboratoryName}
                   href={'/labs/connect?laboratory-name=' + yamlProperty.laboratoryName}
                   className={clsx(
@@ -75,7 +75,7 @@ export default async function Details({
                   )}>
                   <LinkIcon className="w-6" />
                   <p className="hidden md:block">{"Iniciar"}</p>
-                </Link>
+                </Link>*/}
               </div>
 
         </div> }
