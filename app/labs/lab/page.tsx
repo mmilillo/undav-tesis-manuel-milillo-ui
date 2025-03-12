@@ -16,7 +16,15 @@ async function Content() {
 
   // client side parameters
   const searchParams = useSearchParams()
-  const laboratoryName = searchParams.get('laboratory-name') // returns 'bar' when ?foo=bar
+  let laboratoryName;
+
+
+  if (process.env.CI) {
+    const laboratoryName = 'test-ci'
+  }
+  else{
+    laboratoryName = searchParams.get('laboratory-name') // returns 'bar' when ?foo=bar
+  }
 
 
   console.log('laboratorio es: ' + laboratoryName);
