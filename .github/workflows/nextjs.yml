@@ -3,10 +3,10 @@ name: Build Next.js App
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     branches:
-      - main
+      - develop
   workflow_dispatch: # Permite ejecución manual desde GitHub
 
 jobs:
