@@ -11,6 +11,11 @@ import React, { Suspense, useEffect, useState } from 'react';
 // INFO PARA CONNECTARSE A UN CONTENEDOR
 function Content() {
 
+  // desabilita llamada a apis en momento de compilacion del CI
+  if (process.env.CI) {
+    return { props: { data: null } };
+  }
+
   // client side parameters
   const searchParams = useSearchParams()
   let laboratoryName = searchParams.get('laboratory-name') // returns 'bar' when ?foo=bar

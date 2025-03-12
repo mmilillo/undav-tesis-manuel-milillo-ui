@@ -33,6 +33,12 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers } from '@/app/lib/data';
  
 export default async function Page() {
+
+  // desabilita llamada a apis en momento de compilacion del CI
+  if (process.env.CI) {
+    return { props: { data: null } };
+  }
+
   const operatingSystems = await fetchOperatingSystems();
   const dataBases = await fetchDataBases();
   const labsReales = await fetchYamlLabs();

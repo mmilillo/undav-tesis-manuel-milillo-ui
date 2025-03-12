@@ -7,6 +7,11 @@ import RunningLaboratories from '../ui/labs/running-laboratories';
 // PAGINA PRINCIPAL DE LABORATORIOS
 // consulta labs ejecutandose
 export default async function Page() {
+  // desabilita llamada a apis en momento de compilacion del CI
+  if (process.env.CI) {
+    return { props: { data: null } };
+  }
+
   const labsReales = await fetchRuningLabs();
 
   return (
