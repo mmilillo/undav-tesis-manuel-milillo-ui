@@ -32,7 +32,7 @@ import Form from '@/app/ui/invoices/create-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers } from '@/app/lib/data';
  
-export default async function Page() {z
+export default async function Page() {
   const operatingSystems = await fetchOperatingSystems();
   const dataBases = await fetchDataBases();
   const labsReales = await fetchYamlLabs();
