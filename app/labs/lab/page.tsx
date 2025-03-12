@@ -14,11 +14,6 @@ import { Suspense } from 'react';
 // INFO DE UN LABORATORIO
 async function Content() {
 
-  // desabilita llamada a apis en momento de compilacion del CI
-  if (process.env.CI) {
-    return { props: { data: null } };
-  }
-
   // client side parameters
   const searchParams = useSearchParams()
   const laboratoryName = searchParams.get('laboratory-name') // returns 'bar' when ?foo=bar
