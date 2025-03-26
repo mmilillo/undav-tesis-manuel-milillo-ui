@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   CustomerField,
   CustomersTableType,
+  ImportedLaboratoryDTO,
   InvoiceForm,
   InvoicesTable,
   LaboratoryDTO,
@@ -386,6 +387,10 @@ export async function fetchYamlLabByName(laboratoryName : string) {
       },
     });
 
+    if (response.status == 404) {
+      return response.json();
+    }
+
     if (!response.ok) {
       throw new Error("Error en la solicitud");
     }
@@ -471,6 +476,38 @@ export async function createLab(laboratoryDTO: LaboratoryDTO) {
     });
 
     if (!response.ok) {
+      throw new Error("Error en la solicitud");
+    }
+
+    
+    const data = await response.json();
+    console.log(data);
+    return data; // Aquí puedes retornar los datos para usarlos en tu componente
+  } catch (error) {
+    console.error("Error al llamar a la API:", error);
+    throw error; // Lanza el error para manejarlo en otro lugar si es necesario
+  }
+};
+
+export async function importLab(importedLaboratoryDTO: ImportedLaboratoryDTO) {
+  try {
+
+    console.log('dentro de data: ' + JSON.stringify(importedLaboratoryDTO))
+    const response = await fetch("http://localhost:3001/command/import", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+        // Agrega cualquier otro header necesario como Authorization, etc.
+      },
+      body: JSON.stringify({
+        laboratoryPath: importedLaboratoryDTO.laboratoryPath,
+        fileName: importedLaboratoryDTO.fileName,
+      })
+    });
+
+    if (!response.ok) {
+      console.error(response)
       throw new Error("Error en la solicitud");
     }
 
@@ -586,6 +623,59 @@ export async function downLabByName(lab : RunLabDTO) {
   } catch (error) {
     console.error("Error al llamar a la API:", error);
     throw error; // Lanza el error para manejarlo en otro lugar si es necesario
+  }
+};
+
+export async function downLoadLabByName(lab : string) {
+  try {
+    const response = await fetch(`http://localhost:3001/command/export/${lab}`, {
+      method: "POST", // Puedes usar "POST", "PUT", etc., según lo que necesites
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+    });
+
+    if(response.status == 400){
+      return {error: "El laboratorio fue exportado previamente"}
+    }
+
+    if (!response.ok) {
+      console.error("Error al exportar archivo: " + response);
+      throw "Error al exportar archivo";
+    }
+    
+    const data = await response.json();
+    console.log(data);
+    return data; 
+  } catch (error) {
+    console.error("Error al llamar a la API:", error);
+    throw error;
+  }
+};
+
+export async function deleteImportedLabByName(lab : RunLabDTO) {
+  try {
+    const response = await fetch(`http://localhost:3001/command/`, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(lab)
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    
+    const data = await response.json();
+    console.log(data);
+    return data; 
+  } catch (error) {
+    console.error("Error al llamar a la API:", error);
+    throw error; 
   }
 };
 

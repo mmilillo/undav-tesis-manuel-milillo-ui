@@ -1,7 +1,7 @@
 'use server';
 
-import { createLab, downLabByName, fetchYamlFileByName, runLabByName } from "./data";
-import { LaboratoryDTO, RunLabDTO } from "./definitions";
+import { createLab, downLabByName, fetchYamlFileByName, runLabByName, deleteImportedLabByName, importLab, downLoadLabByName } from "./data";
+import { ImportedLaboratoryDTO, LaboratoryDTO, RunLabDTO } from "./definitions";
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from "next/navigation";
@@ -38,6 +38,27 @@ export async function createInvoice(formData: FormData) {
     revalidatePath('/labs/create');
 }
 
+export async function importLaboratory(formData: FormData) {
+
+  let laboratoryPath = formData.get('laboratoryPath');
+  let fileName = formData.get('fileName');
+
+  if(!laboratoryPath || !fileName){
+    throw 'Invalid null fields';
+  }
+
+  const importedLaboratoryDTO : ImportedLaboratoryDTO = {
+    laboratoryPath: laboratoryPath.toString(),
+    fileName: fileName.toString()
+   }
+
+   console.log('archivo a importar: ' + importedLaboratoryDTO)
+
+  await importLab(importedLaboratoryDTO);
+
+  revalidatePath('/labs');
+  redirect('/labs');
+}
 
 export async function upLab(id: string) {
 
@@ -68,4 +89,40 @@ export async function downLab(id: string) {
  
    revalidatePath('/labs/lab?laboratory-name=' + id);
    redirect('/labs/lab?laboratory-name=' + id);
+ }
+
+
+export async function downLoadLab(id: string) {
+
+  console.log('el id es: ' + id)
+ 
+ 
+  const reponse = await downLoadLabByName(id);
+  revalidatePath('/labs/lab?laboratory-name=' + id);
+
+  if(reponse['error']){
+    redirect('/labs/lab?laboratory-name=' + id + '&error=' + reponse['error']);
+  }
+  else{
+    redirect('/labs/lab?laboratory-name=' + id + '&path=' + reponse['path']);
+  }
+ 
+   
+   
+ }
+ 
+
+ export async function deleteImportedLab(id: string) {
+
+  console.log('el id es: ' + id)
+ 
+  const runLabDTO : RunLabDTO = {
+   laboratoryName: id,
+   operation: 'delete'
+  }
+ 
+  const labsReales = await deleteImportedLabByName(runLabDTO);
+ 
+   revalidatePath('/labs/lab?laboratory-name=' + id);
+   redirect('/labs');
  }

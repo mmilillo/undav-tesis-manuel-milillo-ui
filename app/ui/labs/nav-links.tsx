@@ -18,7 +18,7 @@ const links = [
   {
     name: 'Crear', href: '/labs/create', icon: PlusCircleIcon,
   },
-  { name: 'Importar', href: '/labs/othermenu', icon: InboxArrowDownIcon },
+  { name: 'Importar/Exportar', href: '/labs/importar-exportar', icon: InboxArrowDownIcon },
 ];
 
 export default function NavLinks() {

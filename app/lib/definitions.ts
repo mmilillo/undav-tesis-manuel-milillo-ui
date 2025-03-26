@@ -93,6 +93,11 @@ export type LaboratoryDTO = {
   db: string;
 };
 
+export type ImportedLaboratoryDTO = {
+  laboratoryPath: string;
+  fileName: string;
+};
+
 export type Container = {
   id: string
   laboratoryName: string

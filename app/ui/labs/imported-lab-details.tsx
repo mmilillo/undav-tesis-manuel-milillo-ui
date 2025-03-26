@@ -11,13 +11,13 @@ import {
   DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
 import { LinkIcon } from '@heroicons/react/20/solid';
-import { DownLab, DownLoadLab } from './buttons';
+import { DeleteImportedLab, DownLoadLab } from './buttons';
 
-export default async function Details({
+export default async function ImportedLabDetails({
   labsProperty, path, error
 }: {
   labsProperty: LabDetails;
-  path : string | null
+  path: string | null;
   error: string | null;
 }) {
   return (
@@ -68,7 +68,7 @@ export default async function Details({
                     </p>
                   </div>
                 </div>
-                <DownLab id={container.laboratoryName} />
+                <DeleteImportedLab id={container.containerName} />
                 <Link
                   key={container.laboratoryName}
                   href={'/labs/connect?laboratory-name=' + container.laboratoryName + '&system-type=' + container.type + '&system-name=' + container.systemName + '&container-id=' + container.id}
@@ -86,7 +86,7 @@ export default async function Details({
           <ArrowPathIcon className="h-5 w-5 text-gray-500" />
           <h3 className="ml-2 text-sm text-gray-500 ">Updated just now</h3>
         </div>
-      
+
         <div className="bg-white px-6">
           <div className="min-w-0 flex items-center gap-x-8">
             <p className="truncate text-sm font-semibold md:text-base">
@@ -94,10 +94,10 @@ export default async function Details({
             </p>
             <DownLoadLab id={labsProperty.laboratoryName} />
           {path && (
-            <p className="text-green-600 text-sm">{ `El laboratorio fue exportado correctamente. path: ${path}` }</p>
+            <p className="text-green-600 text-sm">{ `El laboratorio fue exportado correctamente. Path: ${path}` }</p>
           )}
           {error && (
-             <p className="text-red-600 text-sm">{ `Ocurrió un error al exportar el laboratorio. Error: ${error}` }</p>
+             <p className="text-red-600 text-sm">{ `Ocurrió un error al exportar el laboratorio. Error: ${error}`  }</p>
           )}
           </div>
         </div>

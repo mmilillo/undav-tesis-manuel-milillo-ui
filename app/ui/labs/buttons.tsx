@@ -1,6 +1,6 @@
-import { ArrowDownIcon, PencilIcon, PlayIcon, PlusIcon, StopIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon, PencilIcon, PlayIcon, PlusIcon, StopIcon, TrashIcon} from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { upLab, downLab } from '@/app/lib/actions';
+import { upLab, downLab, deleteImportedLab, downLoadLab } from '@/app/lib/actions';
 
 export function CreateInvoice() {
   return (
@@ -38,13 +38,25 @@ export function DownLab({ id }: { id: string }) {
   )
 }
 
-export function DownloadLab({ id }: { id: string }) {
-  const downLabWithId = downLab.bind(null, id);
+export function DownLoadLab({ id }: { id: string }) {
+  const downLabWithId = downLoadLab.bind(null, id);
   return (
     <form action={downLabWithId}>
     <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
       <span className="sr-only">start</span>
       <ArrowDownIcon className="w-4" />
+    </button>
+  </form>
+  )
+}
+
+export function DeleteImportedLab({ id }: { id: string }) {
+  const deleteImportedLabWithId = deleteImportedLab.bind(null, id);
+  return (
+    <form action={deleteImportedLabWithId}>
+    <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
+      <span className="sr-only">start</span>
+      <TrashIcon className="w-4" />
     </button>
   </form>
   )
